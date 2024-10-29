@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -123,6 +124,40 @@ const Delete = styled.button`
 `;
 
 function App() {
+    const [country, setCountry] = useState('');
+    const [gold, setGold] = useState(0);
+    const [silver, setSilver] = useState(0);
+    const [bronze, setBronze] = useState(0);
+
+    /* 국가명 값 변경 */
+    const changeCountry = (e) => setCountry(e.target.value);
+
+    /* 금메달 값 변경 */
+    const changeGold = (e) => setGold(parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value));
+
+    /* 은메달 값 변경 */
+    const changeSilver = (e) => setSilver(parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value));
+
+    /* 동메달 값 변경 */
+    const changeBronze = (e) => setBronze(parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value));
+
+    /* 추가 및 업데이트 이벤트 */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        window.alert('버튼 클릭');
+
+        setCountry('');
+        setGold(0);
+        setSilver(0);
+        setBronze(0);
+    };
+
+    /* 삭제 이벤트 */
+    const handleDelete = () => {
+        window.alert('버튼 클릭');
+    };
+
     const listItems = [
         { country: '대한민국', gold: 15, silver: 10, bronze: 7 },
         { country: '일본', gold: 7, silver: 12, bronze: 5 },
@@ -133,22 +168,22 @@ function App() {
         <Container>
             <Title>2024 파리 올림픽</Title>
 
-            <Form>
+            <Form onSubmit={(e) => handleSubmit(e)}>
                 <InputContainer>
                     <InputTitle>국가명</InputTitle>
-                    <Input type="text" placeholder="국가 입력" />
+                    <Input type="text" placeholder="국가 입력" value={country} onChange={changeCountry} />
                 </InputContainer>
                 <InputContainer>
                     <InputTitle>금메달</InputTitle>
-                    <Input type="number" />
+                    <Input type="number" value={gold} onChange={changeGold} />
                 </InputContainer>
                 <InputContainer>
                     <InputTitle>은메달</InputTitle>
-                    <Input type="number" />
+                    <Input type="number" value={silver} onChange={changeSilver} />
                 </InputContainer>
                 <InputContainer>
                     <InputTitle>동메달</InputTitle>
-                    <Input type="number" />
+                    <Input type="number" value={bronze} onChange={changeBronze} />
                 </InputContainer>
                 <CreateUpdate type="submit" value="국가 추가" />
                 <CreateUpdate type="submit" value="업데이트" />
@@ -172,7 +207,9 @@ function App() {
                             <ListValue>{item.silver}</ListValue>
                             <ListValue>{item.bronze}</ListValue>
                             <ListValue>
-                                <Delete type="button">삭제</Delete>
+                                <Delete type="button" onClick={handleDelete}>
+                                    삭제
+                                </Delete>
                             </ListValue>
                         </ListValueContainer>
                     );
