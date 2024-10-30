@@ -32,6 +32,7 @@ function App() {
     const [silver, setSilver] = useState(0);
     const [bronze, setBronze] = useState(0);
     const [list, setList] = useState([]);
+    const [sort, setSort] = useState('gold');
 
     /* 국가명 값 변경 */
     const changeCountry = (e) => setCountry(e.target.value);
@@ -44,6 +45,12 @@ function App() {
 
     /* 동메달 값 변경 */
     const changeBronze = (e) => setBronze(e.target.value);
+
+    /* 정렬 기준 변경 이벤트 */
+    const handleSort = (value) => {
+        setSort(value);
+        list.sort((a, b) => b[value] - a[value]);
+    };
 
     /* form submit 이벤트 */
     const handleSubmit = (e) => {
@@ -64,7 +71,15 @@ function App() {
         } else if (parseInt(gold) > 100 || parseInt(silver) > 100 || parseInt(bronze) > 100) {
             window.alert('메달의 갯수는 100보다 클 수 없습니다.');
         } else {
-            setList([...list, { country, gold: gold || 0, silver: silver || 0, bronze: bronze || 0 }]);
+            const value = {
+                country,
+                gold: parseInt(gold) || 0,
+                silver: parseInt(silver) || 0,
+                bronze: parseInt(bronze) || 0,
+                total: (parseInt(gold) || 0) + (parseInt(silver) || 0) + (parseInt(bronze) || 0)
+            };
+
+            setList([...list, value].sort((a, b) => b[sort] - a[sort]));
             setCountry('');
             setGold(0);
             setSilver(0);
@@ -79,7 +94,15 @@ function App() {
         if (!updated) {
             window.alert('해당 국가가 등록되어 있지 않습니다.');
         } else {
-            setList([...list.filter((item) => item.country !== country), { country, gold: gold || 0, silver: silver || 0, bronze: bronze || 0 }]);
+            const value = {
+                country,
+                gold: parseInt(gold) || 0,
+                silver: parseInt(silver) || 0,
+                bronze: parseInt(bronze) || 0,
+                total: (parseInt(gold) || 0) + (parseInt(silver) || 0) + (parseInt(bronze) || 0)
+            };
+
+            setList([...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort]));
             setCountry('');
             setGold(0);
             setSilver(0);
@@ -89,7 +112,7 @@ function App() {
 
     /* 삭제 이벤트 */
     const handleDelete = (deleted) => {
-        setList([...list.filter((item) => item.country !== deleted)]);
+        setList([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]));
     };
 
     return (
@@ -105,12 +128,10 @@ function App() {
                 <Button type="update" name="업데이트" />
             </Form>
 
-            <List data={list.length}>
-                {list
-                    .sort((a, b) => b.gold - a.gold)
-                    .map((item, index) => {
-                        return <ListItem key={index} data={item} handleDelete={() => handleDelete(item.country)} />;
-                    })}
+            <List data={list.length} sort={sort} handleSort={handleSort}>
+                {list.map((item, index) => {
+                    return <ListItem key={index} data={item} handleDelete={() => handleDelete(item.country)} />;
+                })}
             </List>
         </Container>
     );

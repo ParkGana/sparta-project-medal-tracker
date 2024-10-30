@@ -14,10 +14,19 @@ const TitleContainer = styled.div`
 
 const Title = styled.div`
     width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     color: #ffffff;
     font-size: 16px;
     font-weight: 700;
     text-align: center;
+    cursor: pointer;
+`;
+
+const Sort = styled.p`
+    font-size: 12px;
 `;
 
 const Message = styled.p`
@@ -26,17 +35,30 @@ const Message = styled.p`
     text-align: center;
 `;
 
-function List({ data, children }) {
+function List({ data, sort, handleSort, children }) {
     return (
         <>
             {data ? (
                 <Container>
                     <TitleContainer>
                         <Title>국가명</Title>
-                        <Title>금메달</Title>
-                        <Title>은메달</Title>
-                        <Title>동메달</Title>
-                        <Title>액션</Title>
+                        <Title onClick={() => handleSort('gold')}>
+                            금메달
+                            <Sort>{sort === 'gold' ? '▼' : '▽'} </Sort>
+                        </Title>
+                        <Title onClick={() => handleSort('silver')}>
+                            은메달
+                            <Sort>{sort === 'silver' ? '▼' : '▽'} </Sort>
+                        </Title>
+                        <Title onClick={() => handleSort('bronze')}>
+                            동메달
+                            <Sort>{sort === 'bronze' ? '▼' : '▽'} </Sort>
+                        </Title>
+                        <Title onClick={() => handleSort('total')}>
+                            합계
+                            <Sort>{sort === 'total' ? '▼' : '▽'} </Sort>
+                        </Title>
+                        <Title></Title>
                     </TitleContainer>
                     {children}
                 </Container>

@@ -30,6 +30,7 @@ function ListItem({ data, handleDelete }) {
             <Value>{data.gold}</Value>
             <Value>{data.silver}</Value>
             <Value>{data.bronze}</Value>
+            <Value>{data.total}</Value>
             <Value>
                 <Button type="delete" handleDelete={handleDelete} />
             </Value>
