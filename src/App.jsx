@@ -62,15 +62,23 @@ function App() {
 
     /* 추가 이벤트 */
     const handleCreate = () => {
+        // 국가명을 입력하지 않은 경우
         if (!country) {
             window.alert('국가명을 입력해주세요.');
-        } else if (list.filter((item) => item.country === country).length) {
+        }
+        // 입력한 국가가 이미 등록되어 있는 경우
+        else if (list.filter((item) => item.country === country).length) {
             window.alert('해당 국가가 이미 등록되어 있습니다.');
-        } else if (parseInt(gold) < 0 || parseInt(silver) < 0 || parseInt(bronze) < 0) {
+        }
+        // 메달 값으로 0보다 작은 값을 입력한 경우
+        else if (parseInt(gold) < 0 || parseInt(silver) < 0 || parseInt(bronze) < 0) {
             window.alert('메달의 갯수는 0보다 작을 수 없습니다.');
-        } else if (parseInt(gold) > 100 || parseInt(silver) > 100 || parseInt(bronze) > 100) {
+        }
+        // 메달 값으로 100보다 큰 값을 입력한 경우
+        else if (parseInt(gold) > 100 || parseInt(silver) > 100 || parseInt(bronze) > 100) {
             window.alert('메달의 갯수는 100보다 클 수 없습니다.');
         } else {
+            // 추가할 데이터
             const value = {
                 country,
                 gold: parseInt(gold) || 0,
@@ -79,6 +87,7 @@ function App() {
                 total: (parseInt(gold) || 0) + (parseInt(silver) || 0) + (parseInt(bronze) || 0)
             };
 
+            // 추가한 결과가 반영된 list
             const result = [...list, value].sort((a, b) => b[sort] - a[sort]);
 
             window.localStorage.setItem('medalTracker', JSON.stringify(result));
@@ -94,9 +103,11 @@ function App() {
     const handleUpdate = () => {
         let updated = list.filter((item) => item.country === country)[0];
 
+        // 입력한 국가가 등록되어있지 않은 경우
         if (!updated) {
             window.alert('해당 국가가 등록되어 있지 않습니다.');
         } else {
+            // 수정할 데이터
             const value = {
                 country,
                 gold: parseInt(gold) || 0,
@@ -105,6 +116,7 @@ function App() {
                 total: (parseInt(gold) || 0) + (parseInt(silver) || 0) + (parseInt(bronze) || 0)
             };
 
+            // 수정한 결과가 반영된 list
             const result = [...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort]);
 
             window.localStorage.setItem('medalTracker', JSON.stringify(result));
@@ -119,6 +131,7 @@ function App() {
     /* 삭제 이벤트 */
     const handleDelete = (deleted) => {
         if (confirm(`${deleted}의 메달 집계 내역을 삭제하시겠습니까?`)) {
+            // 삭제한 결과가 반영된 list
             const result = [...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]);
 
             window.localStorage.setItem('medalTracker', JSON.stringify(result));
