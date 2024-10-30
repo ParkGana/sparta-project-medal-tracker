@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const CreateUpdate = styled.input`
-    width: 100px;
+    width: 10%;
     height: 40px;
     border: none;
     border-radius: 4px;

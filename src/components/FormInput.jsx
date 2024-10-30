@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+    width: 20%;
     text-align: center;
 `;
 
@@ -12,7 +13,7 @@ const Label = styled.p`
 `;
 
 const Input = styled.input`
-    width: 170px;
+    width: 100%;
     height: 40px;
     border: 1px solid #dddddd;
     border-radius: 4px;

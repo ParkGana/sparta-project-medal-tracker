@@ -7,11 +7,10 @@ import ListItem from './components/ListItem';
 import Button from './components/Button';
 
 const Container = styled.div`
-    max-width: 1000px;
+    min-width: 800px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 20px;
     border-radius: 8px;
     background-color: #ffffff;
@@ -24,6 +23,7 @@ const Title = styled.p`
     color: #003580;
     font-size: 32px;
     font-weight: 700;
+    text-align: center;
 `;
 
 function App() {
