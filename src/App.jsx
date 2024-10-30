@@ -31,7 +31,7 @@ function App() {
     const [gold, setGold] = useState(0);
     const [silver, setSilver] = useState(0);
     const [bronze, setBronze] = useState(0);
-    const [list, setList] = useState([]);
+    const [list, setList] = useState(JSON.parse(window.localStorage.getItem('medalTracker')) ?? []);
     const [sort, setSort] = useState('gold');
 
     /* 국가명 값 변경 */
@@ -80,6 +80,7 @@ function App() {
             };
 
             setList([...list, value].sort((a, b) => b[sort] - a[sort]));
+            window.localStorage.setItem('medalTracker', JSON.stringify([...list, value].sort((a, b) => b[sort] - a[sort])));
             setCountry('');
             setGold(0);
             setSilver(0);
@@ -103,6 +104,7 @@ function App() {
             };
 
             setList([...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort]));
+            window.localStorage.setItem('medalTracker', JSON.stringify([...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort])));
             setCountry('');
             setGold(0);
             setSilver(0);
@@ -113,6 +115,7 @@ function App() {
     /* 삭제 이벤트 */
     const handleDelete = (deleted) => {
         setList([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]));
+        window.localStorage.setItem('medalTracker', JSON.stringify([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort])));
     };
 
     return (
