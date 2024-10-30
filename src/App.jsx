@@ -128,41 +128,52 @@ function App() {
     const [gold, setGold] = useState(0);
     const [silver, setSilver] = useState(0);
     const [bronze, setBronze] = useState(0);
+    const [list, setList] = useState([]);
 
     /* 국가명 값 변경 */
     const changeCountry = (e) => setCountry(e.target.value);
 
     /* 금메달 값 변경 */
-    const changeGold = (e) => setGold(parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value));
+    const changeGold = (e) => setGold(e.target.value);
 
     /* 은메달 값 변경 */
-    const changeSilver = (e) => setSilver(parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value));
+    const changeSilver = (e) => setSilver(e.target.value);
 
     /* 동메달 값 변경 */
-    const changeBronze = (e) => setBronze(parseInt(e.target.value) < 0 ? 0 : parseInt(e.target.value));
+    const changeBronze = (e) => setBronze(e.target.value);
 
-    /* 추가 및 업데이트 이벤트 */
+    /* form submit 이벤트 */
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        window.alert('버튼 클릭');
+        e.nativeEvent.submitter.name === 'create' && handleCreate();
+        e.nativeEvent.submitter.name === 'update' && handleUpdate();
+    };
 
-        setCountry('');
-        setGold(0);
-        setSilver(0);
-        setBronze(0);
+    /* 추가 이벤트 */
+    const handleCreate = () => {
+        if (!country) {
+            window.alert('국가명을 입력해주세요.');
+        } else if (parseInt(gold) < 0 || parseInt(silver) < 0 || parseInt(bronze) < 0) {
+            window.alert('메달의 갯수는 0보다 작을 수 없습니다.');
+        } else {
+            setList([...list, { country, gold: gold || 0, silver: silver || 0, bronze: bronze || 0 }]);
+            setCountry('');
+            setGold(0);
+            setSilver(0);
+            setBronze(0);
+        }
+    };
+
+    /* 수정 이벤트 */
+    const handleUpdate = () => {
+        window.alert('수정');
     };
 
     /* 삭제 이벤트 */
     const handleDelete = () => {
-        window.alert('버튼 클릭');
+        window.alert('삭제');
     };
-
-    const listItems = [
-        { country: '대한민국', gold: 15, silver: 10, bronze: 7 },
-        { country: '일본', gold: 7, silver: 12, bronze: 5 },
-        { country: '중국', gold: 30, silver: 24, bronze: 14 }
-    ];
 
     return (
         <Container>
@@ -185,36 +196,40 @@ function App() {
                     <InputTitle>동메달</InputTitle>
                     <Input type="number" value={bronze} onChange={changeBronze} />
                 </InputContainer>
-                <CreateUpdate type="submit" value="국가 추가" />
-                <CreateUpdate type="submit" value="업데이트" />
+                <CreateUpdate type="submit" name="create" value="국가 추가" />
+                <CreateUpdate type="submit" name="update" value="업데이트" />
             </Form>
 
-            <Message>아직 추가된 국가가 없습니다. 메달을 추적하세요!</Message>
-
-            <ListContainer>
-                <ListTitleContainer>
-                    <ListTitle>국가명</ListTitle>
-                    <ListTitle>금메달</ListTitle>
-                    <ListTitle>은메달</ListTitle>
-                    <ListTitle>동메달</ListTitle>
-                    <ListTitle>액션</ListTitle>
-                </ListTitleContainer>
-                {listItems.map((item, index) => {
-                    return (
-                        <ListValueContainer key={index}>
-                            <ListValue>{item.country}</ListValue>
-                            <ListValue>{item.gold}</ListValue>
-                            <ListValue>{item.silver}</ListValue>
-                            <ListValue>{item.bronze}</ListValue>
-                            <ListValue>
-                                <Delete type="button" onClick={handleDelete}>
-                                    삭제
-                                </Delete>
-                            </ListValue>
-                        </ListValueContainer>
-                    );
-                })}
-            </ListContainer>
+            {list.length ? (
+                <ListContainer>
+                    <ListTitleContainer>
+                        <ListTitle>국가명</ListTitle>
+                        <ListTitle>금메달</ListTitle>
+                        <ListTitle>은메달</ListTitle>
+                        <ListTitle>동메달</ListTitle>
+                        <ListTitle>액션</ListTitle>
+                    </ListTitleContainer>
+                    {list
+                        .sort((a, b) => b.gold - a.gold)
+                        .map((item, index) => {
+                            return (
+                                <ListValueContainer key={index}>
+                                    <ListValue>{item.country}</ListValue>
+                                    <ListValue>{item.gold}</ListValue>
+                                    <ListValue>{item.silver}</ListValue>
+                                    <ListValue>{item.bronze}</ListValue>
+                                    <ListValue>
+                                        <Delete type="button" onClick={handleDelete}>
+                                            삭제
+                                        </Delete>
+                                    </ListValue>
+                                </ListValueContainer>
+                            );
+                        })}
+                </ListContainer>
+            ) : (
+                <Message>아직 추가된 국가가 없습니다. 메달을 추적하세요!</Message>
+            )}
         </Container>
     );
 }
