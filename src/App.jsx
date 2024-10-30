@@ -70,7 +70,17 @@ function App() {
 
     /* 수정 이벤트 */
     const handleUpdate = () => {
-        window.alert('수정');
+        let updated = list.filter((item) => item.country === country)[0];
+
+        if (!updated) {
+            window.alert('해당 국가가 등록되어 있지 않습니다.');
+        } else {
+            setList([...list.filter((item) => item.country !== country), { country, gold: gold || 0, silver: silver || 0, bronze: bronze || 0 }]);
+            setCountry('');
+            setGold(0);
+            setSilver(0);
+            setBronze(0);
+        }
     };
 
     /* 삭제 이벤트 */
