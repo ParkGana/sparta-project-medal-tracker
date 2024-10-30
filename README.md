@@ -1,8 +1,67 @@
-# React + Vite
+# Medal Tracker 만들기
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br />
 
-Currently, two official plugins are available:
+내일배움캠프 React 7기 과정에서 진행한 개인 프로젝트이다.
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 프로젝트 목표
+
+-   React 컴포넌트와 useState Hook 다루기
+
+-   React에서 이벤트 관리하기
+
+-   React의 state와 props를 확실히 이해하고 사용하기
+
+<br />
+
+---
+
+<br />
+
+### 프로젝트 내 컴포넌트
+
+-   <b>Button</b> : 버튼 (국가 추가, 업데이트, 삭제)
+
+-   <b>Form</b> : 데이터를 입력하는 form
+
+-   <b>FormInput</b> : form을 구성하는 Input 항목 (국가명, 금메달, 은메달, 동메달)
+
+-   <b>List</b> : 화면에 보여줄 데이터 list
+
+-   <b>ListItem</b> : list를 구성하는 데이터
+
+<br />
+
+---
+
+<br />
+
+### 구현한 기능
+
+-   #### 메달 집계 내역 조회
+
+    -   국가별 메달 집계 내역을 화면에 보여주기
+
+    -   특정 항목을 기준으로 내림차순으로 정렬하기
+
+    -   사용자가 원하는 항목을 기준으로 정렬할 수 있도록 선택 옵션 제공하기
+
+-   #### 메달 집계 내역 추가
+
+    -   특정 국가의 메달 집계 내역을 목록에 추가하기
+
+    -   해당 국가가 이미 등록되어 있는 경우, 경고 메시지 표시하기
+
+-   #### 메달 집계 내역 수정
+
+    -   등록되어 있는 특정 국가의 메달 집계 내역을 수정하기
+
+    -   해당 국가가 등록되어 있지 않은 경우, 경고 메시지 표시하기
+
+-   #### 메달 집계 내역 삭제
+
+    -   등록되어 있는 특정 국가의 메달 집계 내역을 삭제하기
+
+<br />
+
+---
