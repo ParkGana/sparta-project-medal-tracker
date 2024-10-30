@@ -114,8 +114,10 @@ function App() {
 
     /* 삭제 이벤트 */
     const handleDelete = (deleted) => {
-        setList([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]));
-        window.localStorage.setItem('medalTracker', JSON.stringify([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort])));
+        if (confirm(`${deleted}의 메달 집계 내역을 삭제하시겠습니까?`)) {
+            setList([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]));
+            window.localStorage.setItem('medalTracker', JSON.stringify([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort])));
+        }
     };
 
     return (
