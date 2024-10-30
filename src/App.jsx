@@ -79,8 +79,10 @@ function App() {
                 total: (parseInt(gold) || 0) + (parseInt(silver) || 0) + (parseInt(bronze) || 0)
             };
 
-            setList([...list, value].sort((a, b) => b[sort] - a[sort]));
-            window.localStorage.setItem('medalTracker', JSON.stringify([...list, value].sort((a, b) => b[sort] - a[sort])));
+            const result = [...list, value].sort((a, b) => b[sort] - a[sort]);
+
+            window.localStorage.setItem('medalTracker', JSON.stringify(result));
+            setList(result);
             setCountry('');
             setGold(0);
             setSilver(0);
@@ -103,8 +105,10 @@ function App() {
                 total: (parseInt(gold) || 0) + (parseInt(silver) || 0) + (parseInt(bronze) || 0)
             };
 
-            setList([...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort]));
-            window.localStorage.setItem('medalTracker', JSON.stringify([...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort])));
+            const result = [...list.filter((item) => item.country !== country), value].sort((a, b) => b[sort] - a[sort]);
+
+            window.localStorage.setItem('medalTracker', JSON.stringify(result));
+            setList(result);
             setCountry('');
             setGold(0);
             setSilver(0);
@@ -115,8 +119,10 @@ function App() {
     /* 삭제 이벤트 */
     const handleDelete = (deleted) => {
         if (confirm(`${deleted}의 메달 집계 내역을 삭제하시겠습니까?`)) {
-            setList([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]));
-            window.localStorage.setItem('medalTracker', JSON.stringify([...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort])));
+            const result = [...list.filter((item) => item.country !== deleted)].sort((a, b) => b[sort] - a[sort]);
+
+            window.localStorage.setItem('medalTracker', JSON.stringify(result));
+            setList(result);
         }
     };
 
