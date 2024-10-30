@@ -57,6 +57,8 @@ function App() {
     const handleCreate = () => {
         if (!country) {
             window.alert('국가명을 입력해주세요.');
+        } else if (list.filter((item) => item.country === country).length) {
+            window.alert('해당 국가가 이미 등록되어 있습니다.');
         } else if (parseInt(gold) < 0 || parseInt(silver) < 0 || parseInt(bronze) < 0) {
             window.alert('메달의 갯수는 0보다 작을 수 없습니다.');
         } else if (parseInt(gold) > 100 || parseInt(silver) > 100 || parseInt(bronze) > 100) {
