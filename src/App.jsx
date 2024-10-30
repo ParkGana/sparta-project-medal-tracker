@@ -84,8 +84,8 @@ function App() {
     };
 
     /* 삭제 이벤트 */
-    const handleDelete = () => {
-        window.alert('삭제');
+    const handleDelete = (deleted) => {
+        setList([...list.filter((item) => item.country !== deleted)]);
     };
 
     return (
@@ -105,7 +105,7 @@ function App() {
                 {list
                     .sort((a, b) => b.gold - a.gold)
                     .map((item, index) => {
-                        return <ListItem key={index} data={item} handleDelete={handleDelete} />;
+                        return <ListItem key={index} data={item} handleDelete={() => handleDelete(item.country)} />;
                     })}
             </List>
         </Container>
