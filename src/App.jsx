@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import Form from './components/Form';
+import FormInput from './components/FormInput';
+import List from './components/List';
+import ListItem from './components/ListItem';
+import Button from './components/Button';
 
 const Container = styled.div`
     max-width: 1000px;
@@ -19,108 +24,6 @@ const Title = styled.p`
     color: #003580;
     font-size: 32px;
     font-weight: 700;
-`;
-
-const Form = styled.form`
-    display: flex;
-    align-items: end;
-    gap: 10px;
-`;
-
-const InputContainer = styled.div`
-    text-align: center;
-`;
-
-const InputTitle = styled.p`
-    color: #000000;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 10px;
-`;
-
-const Input = styled.input`
-    width: 170px;
-    height: 40px;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
-    color: #000000;
-    font-size: 14px;
-    padding: 10px;
-
-    &:focus {
-        outline: none;
-    }
-`;
-
-const CreateUpdate = styled.input`
-    width: 100px;
-    height: 40px;
-    border: none;
-    border-radius: 4px;
-    background-color: #ffcc00;
-    color: #000000;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-`;
-
-const Message = styled.p`
-    color: #000000;
-    font-size: 16px;
-    text-align: center;
-`;
-
-const ListContainer = styled.div`
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-`;
-
-const ListTitleContainer = styled.div`
-    display: flex;
-    background-color: #003580;
-    padding: 15px;
-`;
-
-const ListTitle = styled.div`
-    width: 20%;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    text-align: center;
-`;
-
-const ListValueContainer = styled.div`
-    display: flex;
-    align-items: center;
-    background-color: #f4f4f9;
-    padding: 15px;
-
-    &:nth-child(2n) {
-        background-color: #e6e6fa;
-    }
-
-    &:hover {
-        background-color: #dcdcdc;
-    }
-`;
-
-const ListValue = styled.div`
-    width: 20%;
-    color: #000000;
-    font-size: 14px;
-    text-align: center;
-`;
-
-const Delete = styled.button`
-    border: none;
-    border-radius: 4px;
-    background-color: #ff0000;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    padding: 5px 10px;
-    cursor: pointer;
 `;
 
 function App() {
@@ -179,57 +82,22 @@ function App() {
         <Container>
             <Title>2024 파리 올림픽</Title>
 
-            <Form onSubmit={(e) => handleSubmit(e)}>
-                <InputContainer>
-                    <InputTitle>국가명</InputTitle>
-                    <Input type="text" placeholder="국가 입력" value={country} onChange={changeCountry} />
-                </InputContainer>
-                <InputContainer>
-                    <InputTitle>금메달</InputTitle>
-                    <Input type="number" value={gold} onChange={changeGold} />
-                </InputContainer>
-                <InputContainer>
-                    <InputTitle>은메달</InputTitle>
-                    <Input type="number" value={silver} onChange={changeSilver} />
-                </InputContainer>
-                <InputContainer>
-                    <InputTitle>동메달</InputTitle>
-                    <Input type="number" value={bronze} onChange={changeBronze} />
-                </InputContainer>
-                <CreateUpdate type="submit" name="create" value="국가 추가" />
-                <CreateUpdate type="submit" name="update" value="업데이트" />
+            <Form handleSubmit={handleSubmit}>
+                <FormInput type="text" placeholder="국가 입력" name="국가명" value={country} handleChange={changeCountry} />
+                <FormInput type="number" name="금메달" value={gold} handleChange={changeGold} />
+                <FormInput type="number" name="은메달" value={silver} handleChange={changeSilver} />
+                <FormInput type="number" name="동메달" value={bronze} handleChange={changeBronze} />
+                <Button type="create" name="국가 추가" />
+                <Button type="update" name="업데이트" />
             </Form>
 
-            {list.length ? (
-                <ListContainer>
-                    <ListTitleContainer>
-                        <ListTitle>국가명</ListTitle>
-                        <ListTitle>금메달</ListTitle>
-                        <ListTitle>은메달</ListTitle>
-                        <ListTitle>동메달</ListTitle>
-                        <ListTitle>액션</ListTitle>
-                    </ListTitleContainer>
-                    {list
-                        .sort((a, b) => b.gold - a.gold)
-                        .map((item, index) => {
-                            return (
-                                <ListValueContainer key={index}>
-                                    <ListValue>{item.country}</ListValue>
-                                    <ListValue>{item.gold}</ListValue>
-                                    <ListValue>{item.silver}</ListValue>
-                                    <ListValue>{item.bronze}</ListValue>
-                                    <ListValue>
-                                        <Delete type="button" onClick={handleDelete}>
-                                            삭제
-                                        </Delete>
-                                    </ListValue>
-                                </ListValueContainer>
-                            );
-                        })}
-                </ListContainer>
-            ) : (
-                <Message>아직 추가된 국가가 없습니다. 메달을 추적하세요!</Message>
-            )}
+            <List data={list.length}>
+                {list
+                    .sort((a, b) => b.gold - a.gold)
+                    .map((item, index) => {
+                        return <ListItem key={index} data={item} handleDelete={handleDelete} />;
+                    })}
+            </List>
         </Container>
     );
 }
