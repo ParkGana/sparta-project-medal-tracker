@@ -4,6 +4,8 @@
 
 내일배움캠프 React 7기 과정에서 진행한 개인 프로젝트이다.
 
+https://sparta-project-medal-tracker.vercel.app/
+
 ### 프로젝트 목표
 
 -   React 컴포넌트와 useState Hook 다루기
