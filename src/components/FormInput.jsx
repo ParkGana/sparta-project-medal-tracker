@@ -30,7 +30,7 @@ function FormInput({ type, placeholder, name, value, handleChange }) {
     return (
         <Container>
             <Label>{name}</Label>
-            <Input type={type} placeholder={placeholder} value={value} onChange={handleChange} />
+            <Input type={type} placeholder={placeholder} value={value} onChange={handleChange} required />
         </Container>
     );
 }

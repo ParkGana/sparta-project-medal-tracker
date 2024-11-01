@@ -7,8 +7,14 @@ const ValueContainer = styled.div`
     background-color: #f4f4f9;
     padding: 15px;
 
+    ${(props) => props.isExist && `box-shadow: 0 0 0 3px #0000ff inset;`};
+
     &:nth-child(2n) {
         background-color: #e6e6fa;
+    }
+
+    &:last-child {
+        border-radius: 0 0 8px 8px;
     }
 
     &:hover {
@@ -23,9 +29,9 @@ const Value = styled.div`
     text-align: center;
 `;
 
-function ListItem({ data, handleDelete }) {
+function ListItem({ data, input, handleDelete }) {
     return (
-        <ValueContainer>
+        <ValueContainer isExist={data.country === input}>
             <Value>{data.country}</Value>
             <Value>{data.gold}</Value>
             <Value>{data.silver}</Value>

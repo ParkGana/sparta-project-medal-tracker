@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
 `;
 
 const TitleContainer = styled.div`
     display: flex;
     background-color: #003580;
+    border-radius: 8px 8px 0 0;
     padding: 15px;
 `;
 

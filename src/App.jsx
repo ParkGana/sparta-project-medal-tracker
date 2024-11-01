@@ -38,13 +38,27 @@ function App() {
     const changeCountry = (e) => setCountry(e.target.value);
 
     /* 금메달 값 변경 */
-    const changeGold = (e) => setGold(e.target.value);
+    const changeGold = (e) => setGold(inputValidation(e.target.value));
 
     /* 은메달 값 변경 */
-    const changeSilver = (e) => setSilver(e.target.value);
+    const changeSilver = (e) => setSilver(inputValidation(e.target.value));
 
     /* 동메달 값 변경 */
-    const changeBronze = (e) => setBronze(e.target.value);
+    const changeBronze = (e) => setBronze(inputValidation(e.target.value));
+
+    /* input(type='number') 값 유효성 검사 */
+    const inputValidation = (value) => {
+        // 0보다 작은 값을 입력하면 0으로 치환
+        value = parseInt(value) < 0 ? 0 : value;
+
+        // 최대 2자리까지만 입력 가능
+        value = value.length > 2 ? value.slice(0, 2) : value;
+
+        // 값이 0으로 시작하면 시작 위치에 있는 0 제거 (ex. 01 -> 1)
+        value = value.length > 1 && !parseInt(value[0]) ? value.slice(1) : value;
+
+        return value;
+    };
 
     /* 정렬 기준 변경 이벤트 */
     const handleSort = (value) => {
@@ -62,21 +76,9 @@ function App() {
 
     /* 추가 이벤트 */
     const handleCreate = () => {
-        // 국가명을 입력하지 않은 경우
-        if (!country) {
-            window.alert('국가명을 입력해주세요.');
-        }
         // 입력한 국가가 이미 등록되어 있는 경우
-        else if (list.filter((item) => item.country === country).length) {
+        if (list.filter((item) => item.country === country).length) {
             window.alert('해당 국가가 이미 등록되어 있습니다.');
-        }
-        // 메달 값으로 0보다 작은 값을 입력한 경우
-        else if (parseInt(gold) < 0 || parseInt(silver) < 0 || parseInt(bronze) < 0) {
-            window.alert('메달의 갯수는 0보다 작을 수 없습니다.');
-        }
-        // 메달 값으로 100보다 큰 값을 입력한 경우
-        else if (parseInt(gold) > 100 || parseInt(silver) > 100 || parseInt(bronze) > 100) {
-            window.alert('메달의 갯수는 100보다 클 수 없습니다.');
         } else {
             // 추가할 데이터
             const value = {
@@ -154,7 +156,7 @@ function App() {
 
             <List data={list.length} sort={sort} handleSort={handleSort}>
                 {list.map((item, index) => {
-                    return <ListItem key={index} data={item} handleDelete={() => handleDelete(item.country)} />;
+                    return <ListItem key={index} data={item} input={country} handleDelete={() => handleDelete(item.country)} />;
                 })}
             </List>
         </Container>
